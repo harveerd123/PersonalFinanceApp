@@ -8,7 +8,7 @@ type Transaction = {
     type: string;
     amount: number;
 };
-function IncomeOutcomeScreen() {
+function IncomeExpenseScreen() {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -16,9 +16,9 @@ function IncomeOutcomeScreen() {
   return (
       <>
           <div className="container">
-              <h1>Income/Outcome Page</h1>
+              <h1>Income/Expense Page</h1>
               <p>
-                Use the table below to add any incomes/outcomes.
+                Use the table below to add any incomes/expenses.
               </p>
               <Button variant="primary" onClick={() => setShowModal(true)}>Add Transaction</Button>
               <AddTransactionForm show={showModal} onClose={() => setShowModal(false)}
@@ -63,4 +63,4 @@ function IncomeOutcomeScreen() {
   );
 }
 
-export default IncomeOutcomeScreen;
+export default IncomeExpenseScreen;

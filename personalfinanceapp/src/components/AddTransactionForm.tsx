@@ -13,20 +13,27 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
     const [category, setCategory] = useState<string>('');
     const [type, setType] = useState<string>('');
     const [amount, setAmount] = useState<number>(0);
-    function handleSubmit(): void {
-        const newTransaction: Transaction = {
-            description,
-            category,
-            type,
-            amount
-        }
-        transactionToAdd(newTransaction);
 
-        setDescription('');
-        setCategory('');
-        setType('');
-        setAmount(0);
-        onClose();
+    const [validated, setValidated] = useState(false);
+    function handleSubmit(): void {
+        if (description && category && type && amount > 0) {
+            const newTransaction: Transaction = {
+                description,
+                category,
+                type,
+                amount
+            };
+            transactionToAdd(newTransaction);
+            onClose();
+
+            setDescription('');
+            setCategory('');
+            setType('');
+            setAmount(0);
+            setValidated(false);
+        } else {
+            setValidated(true);
+        }
     }
 
     return (
@@ -34,7 +41,8 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
           <Modal.Header closeButton>
               <Modal.Title>Add Transaction</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+            <Modal.Body>
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
@@ -44,6 +52,9 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
                         placeholder="Enter description"
                         required
                     />
+                    <Form.Control.Feedback type="invalid">
+                        Please provide a description.
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -60,10 +71,13 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
                         <option value="Entertainment">Entertainment</option>
                         <option value="Other">Other</option>
                     </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                        Please provide a category.
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>Income/Outcome</Form.Label>
+                    <Form.Label>Income/Expense</Form.Label>
                     <Form.Select
                         value={type}
                         onChange={(e) => setType(e.target.value)}
@@ -73,6 +87,9 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
                         <option value="Income">Income</option>
                         <option value="Expense">Expense</option>
                     </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                        Please provide a income/expense.
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -82,9 +99,15 @@ function AddTransactionForm({ show, onClose, transactionToAdd }:{ show: boolean;
                         value={amount}
                         onChange={(e) => setAmount(Number(e.target.value))}
                         placeholder="Enter amount"
-                        required
+                            required
+                            min="0.01"
+                            step="0.01"
                     />
-                </Form.Group>
+                    <Form.Control.Feedback type="invalid">
+                        Please provide a amount.
+                    </Form.Control.Feedback>
+                    </Form.Group>
+                </Form>
           </Modal.Body>
           <Modal.Footer>
               <Button variant="primary" onClick={handleSubmit}>
