@@ -24,6 +24,9 @@ function IncomeOutcomeScreen() {
                       </tr>
                   </tbody>
               </Table>
+              <p>
+                  Budget Remaining:
+              </p>
           </div>
 
       </>
