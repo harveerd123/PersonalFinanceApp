@@ -1,6 +1,14 @@
-import { Button } from "react-bootstrap";
 
+import { Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 function WelcomeScreen() {
+    const navigate = useNavigate();
+
+    const clickIncomeOutcome = () => {
+        navigate("/income-outcome");
+    }
+
+
   return (
       <>
           <div className="container">
@@ -16,7 +24,7 @@ function WelcomeScreen() {
                   month, along with how much you are saving. 
               </p>
               <div className='button-wrapper'>
-                  <Button variant="primary">Let's Get Started</Button>
+                  <Button variant="primary" onClick={clickIncomeOutcome}>Let's Get Started</Button>
               </div>
           </div>
       </>
