@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 function WelcomeScreen() {
     const navigate = useNavigate();
 
-    const clickIncomeOutcome = () => {
-        navigate("/income-outcome");
+    const clickIncomeExpenses = () => {
+        navigate("/income-expense");
     }
 
 
@@ -24,7 +24,7 @@ function WelcomeScreen() {
                   month, along with how much you are saving. 
               </p>
               <div className='button-wrapper'>
-                  <Button variant="primary" onClick={clickIncomeOutcome}>Let's Get Started</Button>
+                  <Button variant="primary" onClick={clickIncomeExpenses}>Let's Get Started</Button>
               </div>
           </div>
       </>
