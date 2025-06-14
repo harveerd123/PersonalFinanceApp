@@ -13,6 +13,11 @@ function IncomeExpenseScreen() {
 
     const [transactions, setTransactions] = useState<Transaction[]>([]);
 
+    function deleteTransaction(indexToDelete: number): void  {
+        const newList: Transaction[] = transactions.filter((_, index) => index !== indexToDelete);
+        setTransactions(newList);
+    }
+
   return (
       <>
           <div className="container">
@@ -48,7 +53,7 @@ function IncomeExpenseScreen() {
                                   <td>{t.category}</td>
                                   <td>{t.type}</td>
                                   <td>{new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(t.amount)}</td>
-                                  <td>—</td>
+                                  <td><Button variant="danger" onClick={() => deleteTransaction(index)}>Delete</Button></td>
                               </tr>
                           ))
                       )}
