@@ -1,6 +1,14 @@
-import { Button } from "react-bootstrap";
 
+import { Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 function WelcomeScreen() {
+    const navigate = useNavigate();
+
+    const clickIncomeExpenses = () => {
+        navigate("/income-expense");
+    }
+
+
   return (
       <>
           <div className="container">
@@ -12,11 +20,11 @@ function WelcomeScreen() {
                   On top of that, I&apos;m new to TypeScript and wanted to use this project as a way to learn and get comfortable with it!
               </p>
               <p>
-                  This application will allow you to put in incomes/outcomes, and it will calculate for you how much you are spending per
+                  This application will allow you to put in incomes/expenses, and it will calculate for you how much you are spending per
                   month, along with how much you are saving. 
               </p>
               <div className='button-wrapper'>
-                  <Button variant="primary">Let's Get Started</Button>
+                  <Button variant="primary" onClick={clickIncomeExpenses}>Let's Get Started</Button>
               </div>
           </div>
       </>
