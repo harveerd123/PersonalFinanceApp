@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import AddTransactionForm from '../components/AddTransactionForm';
+import { useMemo } from "react";
 
 type Transaction = {
     description: string;
@@ -17,6 +18,22 @@ function IncomeExpenseScreen() {
         const newList: Transaction[] = transactions.filter((_, index) => index !== indexToDelete);
         setTransactions(newList);
     }
+
+    const budget = useMemo(() => {
+        const incomeTotal = transactions
+            .filter(t => t.type.toLowerCase() === 'income')
+            .map(t => t.amount)
+            .reduce((sum, amount) => sum + amount, 0);
+
+        const expenseTotal = transactions
+            .filter(t => t.type.toLowerCase() === 'expense')
+            .map(t => t.amount)
+            .reduce((sum, amount) => sum + amount, 0);
+
+        return incomeTotal - expenseTotal;
+    }, [transactions]);
+    //useMemo remembers the result of a calculation so React doesn’t have to do it again every time the component shows up, but only when something it depends on changes.
+
 
   return (
       <>
@@ -61,6 +78,12 @@ function IncomeExpenseScreen() {
               </Table>
               <p>
                   Budget Remaining:
+                  <strong>
+                      {new Intl.NumberFormat("en-GB", {
+                          style: "currency",
+                          currency: "GBP",
+                      }).format(budget)}
+                  </strong>
               </p>
           </div>
 
